@@ -1,0 +1,41 @@
+class Solution {
+public:
+ListNode* reverse(ListNode* head){
+        ListNode* prev=NULL;
+        ListNode* curr=head;
+        ListNode* nex=NULL;
+        while(curr!=NULL){
+            nex=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nex;
+        }
+    return prev;
+    }
+    bool isPalindrome(ListNode* head) {
+        if(head==NULL || head->next==NULL){
+            return true;
+        }
+        ListNode* dummy=new ListNode(0);
+        dummy->next=head;
+         ListNode* slow=dummy;
+         ListNode* fast=dummy;
+        while(fast!=NULL && fast->next!=NULL){
+            fast=fast->next->next;
+            slow=slow->next;
+        }
+        ListNode* head2=slow->next;
+        if(head2==NULL){
+            return false;
+        }
+       head2= reverse(head2); 
+        while(head2!=NULL){
+            if(head->val!=head2->val){
+                return false;
+            }
+            head=head->next;
+            head2=head2->next;
+        }
+        return true;
+    }
+};
