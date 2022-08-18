@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int len=height.size();
+        int area = 0;
+        int minheight =0 , width=0;
+    for (int i = 0; i < len; i++) {
+        for (int j = i + 1; j < len; j++) {
+            minheight = min(height[j], height[i]) ;
+            width=j-i ;
+            // Calculating the max area
+            area = max(area, minheight * width);
+        }
+    }
+    return area;
+    }
+};
+o(n)
+o(n)
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int len=height.size();
+        int area = 0 ;
+        int s=0 , e=len-1;
+        while(s<e){
+            area = max(area , min(height[s],height[e])*(e-s));
+            
+            if(height[s]<height[e]){
+                s++;
+            }
+            else{
+                e--;
+            }
+        }
+      return area;
+    }
+};
+
+o(logn)
+o(1)
