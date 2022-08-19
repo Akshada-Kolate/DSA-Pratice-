@@ -1,0 +1,32 @@
+class Solution {
+public:
+bool valid(char c){
+       if(c>='A'&& c<='Z' || c>='a' && c<='z'|| c>='0' && c<='9')
+           return true;
+       return false;
+   }
+char lowerCase(char c)
+{
+    if(65<=c && c<=90)
+        return c+32;
+    else 
+        return c;
+}
+bool isPalindrome(string st ){
+
+        if(st.size()==0)
+            return true;
+        
+        string ans;
+        for(int i=0;i<st.size();i++){
+            if(valid(st[i])){
+                ans+=lowerCase(st[i]);
+            }
+        }
+        string reversed=ans;
+         reverse(reversed.begin(), reversed.end());
+        if(ans==reversed)
+            return true;
+        return false;      
+    }
+};
