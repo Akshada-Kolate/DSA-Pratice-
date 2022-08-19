@@ -1,0 +1,46 @@
+class Solution {
+public:
+     int partition(vector<int>& nums, int left, int right) {
+       int pivot=nums[left] , s=left+1 , e=right ;
+         while(s<=e){
+             if(nums[s]<pivot && nums[e]> pivot)
+                   swap(nums[s++], nums[e--]);
+             if(nums[s]>=pivot)
+                 s++;
+              if(nums[e]<pivot) 
+                  e--;
+         }
+         swap(nums[left], nums[e]);
+        return  e;
+    }
+    int findKthLargest(vector<int>& nums, int k) {
+       int left= 0 , right =nums.size()-1 ,ans ; 
+        while(true){
+            int idx= partition(nums,left, right);
+            if(idx==k-1){
+                ans=nums[idx];
+                break;
+            }
+            if(idx >k-1)
+                right=idx-1;
+            else
+                left = idx + 1;
+        }
+        return ans;
+    }
+};
+
+time :0(n^2)
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int n=nums.size();
+        
+        sort(nums.begin(), nums.end());
+       
+        return nums[n-k];
+    }
+};
+
+time :0(n)
