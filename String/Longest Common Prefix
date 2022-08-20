@@ -1,0 +1,21 @@
+class Solution {
+public:
+    string lcp(string prefix , string s){
+        int i=0 , j=0;
+        while(i<prefix.size() && j<s.size()){
+            if(prefix[i]!=s[j])
+                break;
+            i++;
+            j++;
+        }
+        return s.substr(0, i);
+    }
+    
+    string longestCommonPrefix(vector<string>& strs) {
+        string prefix=strs[0];
+        for(string st : strs){
+            prefix = lcp(prefix , st);
+        }
+        return prefix ;
+    }
+};
