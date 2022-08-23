@@ -1,4 +1,4 @@
-lass Solution {
+class Solution {
   public:
     void solve(vector<int>& arr,int i, int sum ,vector<int>& v ,
                 vector<vector<int>>& ans){
