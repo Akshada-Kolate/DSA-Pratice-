@@ -1,0 +1,62 @@
+class Solution{
+public:
+   int partition(int N , int arr[] , int sum){
+        if(sum==0){
+            return 1;
+        }    
+        if(sum!=0 && N==0){
+            return 0;
+        }
+        
+        if(arr[N-1]> sum ){
+            return partition(N-1 , arr , sum);
+        }
+        return partition(N-1 , arr , sum) || partition(N-1 , arr , sum-arr[N-1] );
+   }
+   
+    int equalPartition(int N, int arr[]){
+        int sum=0;
+        for(int i=0;i<N;i++){
+            sum+=arr[i];
+        }
+        if(sum%2!=0){
+            return false;
+        }
+        return partition( N , arr , sum);
+        
+    }
+};
+
+DYNAMIC PROGRAMMING SOLUTION 
+
+class Solution{
+public:
+   int partition(int N, int arr[] ,int sum ,vector<vector<int>>& dp ){
+       if(sum==0){
+           return 1;
+       }
+       if(sum!=0 && N==0){
+           return 0;
+       }
+       if(dp[N][sum]!= -1){
+           return dp[N][sum] ;
+       }
+       if(arr[N-1]>sum){
+           return partition(N-1,arr, sum, dp) ;
+       }
+       dp[N][sum]= partition(N-1,arr, sum, dp) || partition(N-1,arr, sum-arr[N-1], dp) ;
+       return dp[N][sum] ;
+   }
+   
+    int equalPartition(int N, int arr[]){
+      int sum=0; 
+      for(int i=0;i<N;i++){
+          sum+=arr[i];
+      }
+      vector<vector<int>> dp(N+1 , vector<int>(sum+1,-1 ));
+      if(sum%2!=0){
+        return 0;
+      }
+    return partition(N , arr , sum/2 , dp);
+    }
+};
