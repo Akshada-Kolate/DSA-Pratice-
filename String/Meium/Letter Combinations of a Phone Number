@@ -1,0 +1,26 @@
+lass Solution {
+public: 
+    void solve(string input , string output , vector<string>& ans , int idx , string pad[] ){
+        if(idx>=input.size()){
+            ans.push_back(output);
+            return ;
+        }
+        int n=input[idx]-'0';
+        string s=pad[n];
+        for(int i=0; i<s.size() ;i++){
+            output.push_back(s[i]);
+            solve(input ,output , ans,idx+1 ,pad);
+            output.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> ans;
+        string output;
+        if(digits.size()==0){
+            return ans;
+        }
+        string pad[10]={"", "", "abc", "def", "ghi", "jkl","mno","pqrs","tuv","wxyz"};
+        solve(digits, output, ans ,0, pad);
+        return ans;
+    }
+};
