@@ -1,0 +1,86 @@
+BRUTE FORCE
+Time Complexcity : O ( 2^n ) Gives us TLE
+Space Complexcity : O( 1 )
+class Solution {
+public:
+    int robHelper(vector<int>&nums, int i){
+        if(i>=nums.size()){
+            return 0;
+        }
+        int a = robHelper(nums, i+2) + nums[i];
+        int b = robHelper(nums, i+1);
+        return max(a,b);
+    }
+    int rob(vector<int>& nums){
+        return robHelper(nums,0);
+    }
+};
+
+MEMOIZATION
+Time Complexcity : O (n)
+Space Complexcity : O(n)
+
+class Solution {
+public:
+    int robHelper(vector<int>&nums, int i, int*dp){
+        int n = nums.size();
+        if(i>=n){
+            return 0;
+        }
+        
+        if(dp[i] != -1){
+            return dp[i];
+        }
+        
+        int a = robHelper(nums, i+2,dp) + nums[i];
+        int b = robHelper(nums, i+1,dp);
+        int ans = max(a,b);
+        dp[i] = ans;
+        return ans;
+    }
+    int rob(vector<int>& nums){
+        int n = nums.size();
+        int *dp = new int[n+1];
+        for(int i=0; i<=n; i++){
+            dp[i] = -1;
+        }
+        return robHelper(nums,0,dp);
+    }
+};
+DYNAMIC PROGRAMMING
+Time Complexity : O(n)
+Space Complexity : O(n)
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        if(nums.size()==1)return nums[0];
+        vector<int>dp(nums.size());
+        dp[0]=nums[0];
+        dp[1]=max(nums[0],nums[1]);
+        for(int i=2;i<nums.size();i++){
+            dp[i]=max(dp[i-1],dp[i-2]+nums[i]);
+        }
+        return dp[nums.size()-1];
+    }
+};
+
+SPACE OPTIMIZATION 
+Time Complexity : O(n)
+Space complexity : O(1)
+
+class Solution {
+public:
+   
+    int rob(vector<int>& nums) {
+        if (nums.size() == 0) return 0;
+    int prev1 = 0;
+    int prev2 = 0;
+    for (int num : nums) {
+        int tmp = prev1;
+        prev1 = max(prev2 + num, prev1);
+        prev2 = tmp;
+    }
+    return prev1;
+    }
+};
