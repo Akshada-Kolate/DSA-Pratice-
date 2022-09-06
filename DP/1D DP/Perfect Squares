@@ -1,0 +1,52 @@
+class Solution {
+public:
+    int square(int n){
+        if(n==0) return 0;
+        int ans= n ;
+        for(int i=1;i*i<= n ;i++){
+            int temp=i*i;
+            ans=min(ans,1 + square(n- temp) );
+        }
+        return ans;
+    }
+    
+    int numSquares(int n) {
+        return square(n);
+    }
+};
+
+class Solution {
+public:
+    int square(int n , vector<int> dp){
+        if(n==0) return 0;
+        if(dp[n]!=-1) return dp[n];
+        int ans= n;
+        for(int i=1;i*i<= n ;i++){
+            int temp=i*i;
+            ans =min( ans  ,1 + square(n- temp , dp) );
+        }
+        dp[n]=ans;
+        return dp[n];
+    }
+    
+    int numSquares(int n) {
+        vector<int> dp(n+1,-1);
+        return square(n , dp);
+    }
+};
+
+class Solution {
+public:
+    int numSquares(int n ){
+        vector<int> dp(n+1, INT_MAX);
+        dp[0]=0;
+        for(int i=1;i<dp.size();i++){
+            for(int j=1;j*j<=i;j++){
+                int temp=j*j;
+                if(i-temp>=0)
+                    dp[i]= min(dp[i],1+dp[i-temp]);
+            }
+        }
+        return dp[n];
+    }
+};
