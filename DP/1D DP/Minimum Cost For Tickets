@@ -1,0 +1,66 @@
+
+class Solution {
+public:
+    int mincost(vector<int>& days, vector<int>& cost , int idx){
+        int n=days.size();
+        if(idx>=n) return 0;
+        int a= cost[0]  + mincost(days, cost , idx+1);
+        int i;
+        for(i=idx;i<n && days[i] < days[idx]+7 ; i++);
+        int b = cost[1]  + mincost(days , cost , i);
+        for(i=idx ; i<n && days[i]<days[idx]+30 ;i++);
+        int c = cost[2] + mincost(days , cost , i);
+        return min(a, min(b, c));
+    }
+    
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        return mincost(days, costs , 0);
+    }
+};
+
+Memorization
+
+class Solution {
+public:
+    int mincost(vector<int>& days, vector<int>& cost , int idx , vector<int> dp){
+        int n=days.size();
+        if(idx>=n) return 0;
+        if(dp[idx]!=-1) return dp[idx];
+        int a= cost[0]  + mincost(days, cost , idx+1, dp);
+        int i;
+        for(i=idx;i<n && days[i] < days[idx]+7 ; i++);
+        int b = cost[1]  + mincost(days , cost , i, dp);
+        for(i=idx ; i<n && days[i]<days[idx]+30 ;i++);
+        int c = cost[2] + mincost(days , cost , i, dp);
+        dp[idx]= min(a, min(b, c));
+        return dp[idx];
+    }
+    
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        int n=days.size();
+        vector<int> dp(n+1,-1);
+        return mincost(days, costs , 0, dp);
+    }
+};
+
+Tabulation
+
+class Solution {
+public:
+   
+    int mincostTickets(vector<int>& days, vector<int>& cost) {
+        int n=days.size();
+        vector<int> dp(n+1,INT_MAX);
+        dp[n]=0;
+         for(int k=n-1;k>=0;k--){
+            int a= cost[0] +dp[k+1];
+            int i;
+            for(i=k;i<n && days[i] < days[k]+7 ; i++);
+            int b = cost[1]  + dp[i];
+            for(i=k ; i<n && days[i]<days[k]+30 ;i++);
+            int c = cost[2] + dp[i];
+            dp[k]= min(a, min(b, c));
+         }
+        return dp[0];
+    }
+};
